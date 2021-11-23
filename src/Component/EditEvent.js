@@ -5,7 +5,6 @@ import { database } from '../config/firebaseConfig';
 import "./Modal.css"
 
 function EditEvent({ ourevent }) {
-    const [modal, setModal] = useState(false)
     const [eventName, seteventName] = useState(ourevent.eventName)
     const [eventVenue,seteventVenue]=useState(ourevent.eventVenue)
     const [eventDate,seteventDate]=useState(ourevent.eventDate)
@@ -14,9 +13,10 @@ function EditEvent({ ourevent }) {
     const [vipTicket, setvipTicket] = useState(ourevent.vipTicket)
 
     const id = ourevent.id
-    
+    // eventName, eventVenue, eventDate, totalAttendees, regularTicket, vipTicket
     const docRef = doc(database, "event", id);
-    const editEvent = async ( eventName, eventVenue, eventDate, totalAttendees, regularTicket, vipTicket) => {
+    const editEvent = async (e ) => {
+        // e.preventDefault()
 
         await updateDoc(docRef, {
             eventName: eventName,
@@ -27,16 +27,12 @@ function EditEvent({ ourevent }) {
             vipTicket: vipTicket,
         })
     }
-
     
-    const toggleModal = () => {
-        setModal(!modal)
-    }
     return (
         <div>
             <h2>Edit Event</h2>
                 
-            <form onSubmit={() => { editEvent( eventName, eventVenue, eventDate, totalAttendees, regularTicket, vipTicket) }}>
+            <form onSubmit={() => { editEvent()}}>
                     <div className="input-container">
                         <label >Event Name:</label>
                     <input type="type" value={eventName} onChange={(e)=>seteventName(e.target.value)} required/>

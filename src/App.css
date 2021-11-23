@@ -22,6 +22,31 @@ body {
   align-items: center;
   padding: 0 30px;
 }
+.homeContainer {
+  background-image: url(./images/churchill.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  min-height: 100%;
+  z-index: -2;
+}
+.homeContainer-content {
+  z-index: 2;
+  color: white;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  line-height: 1.4;
+  max-width: 100%;
+}
+
 .form-container {
   padding: 10px 20px;
   width: 60%;
@@ -33,11 +58,16 @@ body {
   background: rgba(10, 10, 10, 0.4);
   margin-bottom: 10px;
 }
+.loader {
+  display: grid;
+  place-items: center;
+}
 .admin-events {
   width: 80%;
   background: rgba(10, 10, 10, 0.4);
   border-radius: 10px;
   padding: 10px;
+  margin-bottom: 20px;
 }
 .btn-container {
   width: 100%;
@@ -77,6 +107,9 @@ body {
 .apps-btn:hover {
   transform: scale(1.1);
 }
+table {
+  width: 90%;
+}
 th,
 td {
   text-align: center;
@@ -87,6 +120,7 @@ tr {
 }
 tr:hover {
   background-color: #d6eeee;
+  color: black;
 }
 .payment-container {
   width: 100%;
@@ -105,10 +139,7 @@ tr:hover {
     justify-content: space-between;
     align-items: center;
   }
-  tr {
-    width: 100%;
-    height: 50px;
-  }
+
   .btn-container {
     width: 100%;
     height: 110px;
@@ -119,5 +150,77 @@ tr:hover {
   }
   .btn-container button {
     margin-bottom: 10px;
+  }
+  /* Force table to not be like tables anymore */
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
+  tr {
+    height: auto;
+    margin-bottom: 20px;
+    padding: 5px;
+    color: white;
+  }
+  tr:hover {
+    background-color: transparent;
+    color: white;
+  }
+
+  /* Hide table headers */
+  tr th {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+    visibility: hidden;
+    height: 0;
+    width: 0;
+    overflow: hidden;
+  }
+
+  td {
+    border: none;
+    position: relative;
+    padding-left: 50%;
+    height: 40px;
+  }
+
+  td:before {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+  }
+  td:hover {
+    background-color: #d6eeee;
+    color: black;
+  }
+
+  td:nth-of-type(1):before {
+    content: "Event Name";
+  }
+  td:nth-of-type(2):before {
+    content: "Event Venue";
+  }
+  td:nth-of-type(3):before {
+    content: "Event Date";
+  }
+  td:nth-of-type(4):before {
+    content: "Total Attendees";
+  }
+  td:nth-of-type(5):before {
+    content: "Regular Ticket";
+  }
+  td:nth-of-type(6):before {
+    content: "VIP Ticket";
+  }
+  td:nth-of-type(7):before {
+    content: "Buy Ticket";
   }
 }

@@ -2,6 +2,7 @@ import React, { useState} from 'react'
 import { Link,useNavigate } from 'react-router-dom'
 import { database } from '../config/firebaseConfig'
 import { collection, addDoc } from '@firebase/firestore'
+import { ClipLoader } from 'react-spinners'
 import "../App.css"
 
 function Event() {
@@ -27,8 +28,8 @@ function Event() {
                 regularTicket: regularTicket,
                 vipTicket: vipTicket,
             })
-            navigate("/admin")
             setLoading(false)
+            navigate("/admin")
         }
         catch (error) {
             setLoading(false)
@@ -38,7 +39,14 @@ function Event() {
     return (
         <center>
             <h1>Add an Event</h1>
+            
             {error && <h4 style={{color: "red"}}>{ error}</h4>}
+
+            {loading && (
+                <div className="loader">
+                    <ClipLoader loading={loading} size={50} />
+                </div>
+            )}
 
             <form className="form-container" onSubmit={addEvent }>
                 <div className="input-container">

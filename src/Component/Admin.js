@@ -4,6 +4,7 @@ import { auth,database } from '../config/firebaseConfig';
 import { signOut } from "firebase/auth";
 import { getDocs, collection, doc, deleteDoc } from '@firebase/firestore';
 import EditEvent from './EditEvent';
+import { ClipLoader } from 'react-spinners';
 import "../App.css"
 import "./Modal.css"
 
@@ -12,14 +13,19 @@ function Admin() {
     const [error, setError] = useState("")
     const [events, setEvents] = useState([])
     const [modal, setModal] = useState(false)
-    const [id,setId]=useState("")
+    const [id, setId] = useState("")
+    const [loading,setLoading]= useState(false)
 
     useEffect(() => {
         const docsArray=[]
-        const fetchDocs=async () => {
-            const querySnapshot = await getDocs(collection(database, "event"))
+        const fetchDocs = async () => {
+            setLoading(true)
+            const querySnapshot = await getDocs
+                
+            (collection(database, "event"))
             querySnapshot.forEach((doc) => {
                 docsArray.push({ ...doc.data(), id: doc.id })
+                setLoading(false)
             })
             setEvents(docsArray)
         }
@@ -54,9 +60,18 @@ function Admin() {
                 </div>
                 <button onClick={signout} className="apps-btn">Log Out</button>
             </div>
-            {error && <h4 style={{ color: "red" },{textAlign:"center"}}>{error}</h4>}
-            <h2 style={{textAlign:"center"}}>Manage Events</h2>
-            {events.length === 0 ? <h2>No upcoming events. Keep on checking the website and our socials for updates</h2> : events.map(event => {
+
+            {error && <h4 style={{ color: "red" }, { textAlign: "center" }}>{error}</h4>}
+            
+            <h2 style={{ textAlign: "center" }}>Manage Events</h2>
+            
+            {loading && (
+                <div className="loader">
+                    <ClipLoader loading={loading} size={50} />
+                </div>
+            )}
+            
+            {events.length === 0 && loading=== false ? <h2>No upcoming events. Keep on checking the website and our socials for updates</h2> : events.map(event => {
                 return <center key={event.id} className="admin-events" >
                     <h2>{event.eventName} </h2>
                     <p>Venue: {event.eventVenue}</p>
